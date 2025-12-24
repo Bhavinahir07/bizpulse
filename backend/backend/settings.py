@@ -124,7 +124,7 @@ if VERCEL_URL:
 # --- CHANGE THIS ---
 CSRF_TRUSTED_ORIGINS = [
     "https://bizpulse-eta.vercel.app",
-    "https://bizpulse-backend.onrender.com/api", # <--- ADD THIS LINE
+    "https://bizpulse-backend.onrender.com", # <--- ADD THIS LINE
 ]
 # --- EMAIL CONFIGURATION ---
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
