@@ -102,16 +102,22 @@ if not DEBUG:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# --- CORS SETTINGS ---
+# 1. Your fixed, permanent URLs (Manual)
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "http://127.0.0.1:3000",
+    "https://bizpulse-eta.vercel.app", 
 ]
 
-# Add your Vercel URL here once you deploy React
+# 2. Your dynamic "Automatic" URLs (The code you asked about)
 VERCEL_URL = config('VERCEL_URL', default=None)
 if VERCEL_URL:
-    CORS_ALLOWED_ORIGINS.append(VERCEL_URL)
+    # This automatically adds any extra Vercel URLs
+    CORS_ALLOWED_ORIGINS.append(f"https://{VERCEL_URL}")
+
+# Don't forget CSRF for the main site!
+CSRF_TRUSTED_ORIGINS = [
+    "https://bizpulse-eta.vercel.app",
+]
 
 # --- EMAIL CONFIGURATION ---
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
