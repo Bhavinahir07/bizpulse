@@ -115,10 +115,11 @@ if VERCEL_URL:
     CORS_ALLOWED_ORIGINS.append(f"https://{VERCEL_URL}")
 
 # Don't forget CSRF for the main site!
+# --- CHANGE THIS ---
 CSRF_TRUSTED_ORIGINS = [
     "https://bizpulse-eta.vercel.app",
+    "https://bizpulse-backend.onrender.com", # <--- ADD THIS LINE
 ]
-
 # --- EMAIL CONFIGURATION ---
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
