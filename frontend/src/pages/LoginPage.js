@@ -1,4 +1,4 @@
-import api from '../apiClient';
+import api from './apiClient';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {

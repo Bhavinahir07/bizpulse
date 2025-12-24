@@ -1,4 +1,4 @@
-import api from '../apiClient';
+import api from './apiClient';
 import {
     AppBar, Box, Card, CardContent, Chip, Container, CssBaseline, Drawer, Grid, IconButton,
     List, ListItem, ListItemIcon, ListItemText, Table, TableBody, TableCell,
