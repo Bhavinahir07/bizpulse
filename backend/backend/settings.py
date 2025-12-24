@@ -13,7 +13,13 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 # On Render, this variable is provided automatically.
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 
-ALLOWED_HOSTS = ['.ngrok-free.app', 'localhost', '127.0.0.1']
+# Add your Render domain to this list
+ALLOWED_HOSTS = [
+    '.ngrok-free.app', 
+    'localhost', 
+    '127.0.0.1', 
+    'bizpulse-backend.onrender.com'  # <--- ADD THIS
+]
 
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
