@@ -1,4 +1,5 @@
-import api from './apiClient';
+// import api from './apiClient';
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import {
     Box,
@@ -59,18 +60,15 @@ export default function SignUp() {
 
         setError('');
         setSuccess('');
+        // Manually add the full URL for testing
         try {
-            // *** FIX: Changed keys to 'first_name' and 'last_name' ***
-            // This is a common convention for Django/Python backends.
-            // This ensures the data is saved to the correct columns in your 'auth_user' table.
-            await api.post('/register/', {
+            const response = await axios.post('https://bizpulse-backend.onrender.com/api/register/', {
                 first_name: firstName,
                 last_name: lastName,
                 username: username,
                 email,
                 password,
             });
-
 
             setSuccess('Registration successful! You can now log in.');
             setFirstName('');
