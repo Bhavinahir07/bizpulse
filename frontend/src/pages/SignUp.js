@@ -1,3 +1,4 @@
+import api from '../apiClient';
 import React, { useState, useEffect } from 'react';
 import {
     Box,
@@ -14,7 +15,6 @@ import { Visibility, VisibilityOff, ArrowBack } from '@mui/icons-material';
 import axios from 'axios';
 
 // ====================== API BASE URL ======================
-const API_BASE_URL = 'http://127.0.0.1:8000/api'; // replace with your backend URL
 
 export default function SignUp() {
     const [showPassword, setShowPassword] = useState(false);
@@ -63,7 +63,7 @@ export default function SignUp() {
             // *** FIX: Changed keys to 'first_name' and 'last_name' ***
             // This is a common convention for Django/Python backends.
             // This ensures the data is saved to the correct columns in your 'auth_user' table.
-            await axios.post(`${API_BASE_URL}/register/`, {
+            await api.post('/register/', {
                 first_name: firstName,
                 last_name: lastName,
                 username: username,

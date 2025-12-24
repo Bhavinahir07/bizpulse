@@ -1,3 +1,4 @@
+import api from '../apiClient';
 import {
     AppBar, Box, Card, CardContent, Chip, Container, CssBaseline, Drawer, Grid, IconButton,
     List, ListItem, ListItemIcon, ListItemText, Table, TableBody, TableCell,
@@ -19,27 +20,13 @@ import {
 } from 'recharts';
 
 import React, { useState, useEffect, useContext, createContext } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AddCustomerModal from '../components/AddCustomerModal';
 import AddDealModal from '../components/AddDealModal';
-
 // ====================== API CONFIGURATION ======================
-const API_BASE_URL = 'http://127.0.0.1:8000/api';
 
-// Create an Axios instance to automatically include the auth token in every request.
-const api = axios.create({ baseURL: API_BASE_URL });
-api.interceptors.request.use(
-    config => {
-        const token = localStorage.getItem('access');
-        if (token) {
-            config.headers['Authorization'] = `Bearer ${token}`;
-        }
-        return config;
-    },
-    error => Promise.reject(error)
-);
+
 
 // User Context for managing user state
 const UserContext = createContext();
@@ -67,7 +54,7 @@ const UserProvider = ({ children }) => {
             }
 
             console.log('Setting authorization header');
-            api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            
 
             console.log('Fetching user profile from /user/profile/');
             // Fetch user profile

@@ -1,13 +1,11 @@
+import api from '../apiClient';
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {
     Box, Button, Grid,
     IconButton, InputAdornment, TextField, Typography
 } from '@mui/material';
 import { Visibility, VisibilityOff} from '@mui/icons-material';
-
-const API_BASE_URL ='http://localhost:8000/api';
 
 export default function LoginPage() {
     const [emailOrUsername, setEmailOrUsername] = useState('');
@@ -21,7 +19,7 @@ export default function LoginPage() {
         setError('');
 
         try {
-            const response = await axios.post(`${API_BASE_URL}/login/`, {
+            const response = await api.post('/login/', {
                 username: emailOrUsername,
                 password: password,
             });
