@@ -18,7 +18,7 @@ import {
     Area, AreaChart, Bar, BarChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis, Tooltip as RechartsTooltip, PieChart, Pie, Cell, LineChart, Line
 } from 'recharts';
 
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 // 1. IMPORT your centralized api client
 import api from './apiClient'; 
 import { useNavigate } from 'react-router-dom';
