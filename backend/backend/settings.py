@@ -134,3 +134,16 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 ADMIN_EMAIL = config('ADMIN_EMAIL', default='bhavinmeta009@gmail.com')
+
+# settings.py
+import os
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+username = 'admin' # Change this if you want
+email = 'admin@example.com'
+password = 'admin' # Change this!
+
+if not User.objects.filter(username=username).exists():
+    User.objects.create_superuser(username, email, password)
+    print(f"Superuser {username} created successfully!")
