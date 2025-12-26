@@ -14,3 +14,14 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
 
 application = get_wsgi_application()
+
+# At the bottom of wsgi.py
+from django.contrib.auth import get_user_model
+
+try:
+    User = get_user_model()
+    if not User.objects.filter(username='admin').exists():
+        User.objects.create_superuser('admin', 'admin@example.com', 'admin')
+        print("Superuser created successfully via WSGI!")
+except Exception as e:
+    print(f"Superuser skip or error: {e}")
