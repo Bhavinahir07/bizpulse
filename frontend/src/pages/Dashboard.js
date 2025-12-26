@@ -1,4 +1,3 @@
-import api from './apiClient';
 import {
     AppBar, Box, Card, CardContent, Chip, Container, CssBaseline, Drawer, Grid, IconButton,
     List, ListItem, ListItemIcon, ListItemText, Table, TableBody, TableCell,
@@ -19,14 +18,16 @@ import {
     Area, AreaChart, Bar, BarChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis, Tooltip as RechartsTooltip, PieChart, Pie, Cell, LineChart, Line
 } from 'recharts';
 
-import React, { useState, useEffect, useContext, createContext } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
+// 1. IMPORT your centralized api client
+import api from './apiClient'; 
 import { useNavigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AddCustomerModal from '../components/AddCustomerModal';
 import AddDealModal from '../components/AddDealModal';
-// ====================== API CONFIGURATION ======================
 
-
+// 2. DELETE the API_BASE_URL and axios.create sections. 
+// They are now managed inside your dedicated apiClient.js file.
 
 // User Context for managing user state
 const UserContext = createContext();
@@ -37,7 +38,6 @@ const UserProvider = ({ children }) => {
     const [businessProfile, setBusinessProfile] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Get user profile on mount
     useEffect(() => {
         fetchUserProfile();
     }, []);
@@ -45,41 +45,34 @@ const UserProvider = ({ children }) => {
     const fetchUserProfile = async () => {
         try {
             const token = localStorage.getItem('access');
-            console.log('Token found:', !!token); // Debug: Check if token exists
 
             if (!token) {
-                console.log('No token found, setting loading to false');
                 setLoading(false);
                 return;
             }
 
-            console.log('Setting authorization header');
-            
-
-            console.log('Fetching user profile from /user/profile/');
-            // Fetch user profile
+            // 3. The centralized 'api' instance already has the interceptor, 
+            // so we just call the endpoints directly.
             const userResponse = await api.get('/user/profile/');
-            console.log('User response:', userResponse.data);
             setUser(userResponse.data);
 
-            console.log('Fetching business profile from /profile/');
-            // Fetch business profile
             const profileResponse = await api.get('/profile/');
-            console.log('Profile response:', profileResponse.data);
             setBusinessProfile(profileResponse.data);
 
         } catch (error) {
-            console.error('Error fetching user profile:', error);
-            console.error('Error response:', error.response?.data);
+            console.error('Error fetching profiles:', error);
+            // If the token is expired (401), clear it so the user can log in again
             if (error.response?.status === 401) {
-                console.log('401 error, clearing tokens');
                 localStorage.removeItem('access');
                 localStorage.removeItem('refresh');
+                setUser(null);
             }
         } finally {
             setLoading(false);
         }
     };
+    
+    // ... rest of UserProvider and Dashboard component ...
 
     const updateUser = (updatedUser) => {
         setUser(updatedUser);

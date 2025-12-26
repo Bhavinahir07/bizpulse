@@ -1,11 +1,15 @@
-import api from './apiClient';
 import React, { useState } from 'react';
+// 1. IMPORT your api client instead of axios
+import api from './apiClient'; 
 import { useNavigate } from 'react-router-dom';
 import {
     Box, Button, Grid,
     IconButton, InputAdornment, TextField, Typography
 } from '@mui/material';
 import { Visibility, VisibilityOff} from '@mui/icons-material';
+
+// 2. DELETE the API_BASE_URL line from here. 
+// It is now managed inside apiClient.js
 
 export default function LoginPage() {
     const [emailOrUsername, setEmailOrUsername] = useState('');
@@ -19,23 +23,28 @@ export default function LoginPage() {
         setError('');
 
         try {
+            // 3. USE api.post instead of axios.post
+            // Just use '/login/' because apiClient handles the base URL
             const response = await api.post('/login/', {
                 username: emailOrUsername,
                 password: password,
             });
 
             // Store JWT tokens in localStorage
+            // The apiClient will now find these and attach them to future requests
             localStorage.setItem('access', response.data.access);
             localStorage.setItem('refresh', response.data.refresh);
 
-            // Navigate to Dashboard after successful login
             navigate('/dashboard');
-            console.log("User:", response.data.user);
+            console.log("Login Successful, User:", response.data.user);
         } catch (err) {
-            setError('Invalid email/username or password.');
+            // Check for specific backend error messages
+            const errorMessage = err.response?.data?.detail || 'Invalid email/username or password.';
+            setError(errorMessage);
             console.error(err);
         }
     };
+    
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
