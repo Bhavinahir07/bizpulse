@@ -60,23 +60,22 @@ export default function AddCustomerModal({ open, handleClose, refreshData, editC
         setLoading(true);
         setError('');
 
-        try {
-            if (isEdit) {
-                // Update existing customer
-               await api.put(`/customers/${editCustomer.id}/`, {
-                    name: name.trim(),
-                    email: email.trim() || null,
-                    phone_number: phoneNumber.trim() || null
-                });
-            } else {
-                // Create new customer
-                await api.post('/customers/', {
-                    name: name.trim(),
-                    email: email.trim() || null,
-                    phone_number: phoneNumber.trim() || null
-                });
-            }
-
+       try {
+    if (isEdit && editCustomer) {
+        // CORRECTED: Added ${editCustomer.id}/ to the URL
+        await api.put(`/customers/${editCustomer.id}/`, {
+            name: name.trim(),
+            email: email.trim() || null,
+            phone_number: phoneNumber.trim() || null
+        });
+    } else {
+        // Create new customer
+        await api.post('/customers/', {
+            name: name.trim(),
+            email: email.trim() || null,
+            phone_number: phoneNumber.trim() || null
+        });
+    }
             setSuccess(true);
             // Reset form
             setName('');
