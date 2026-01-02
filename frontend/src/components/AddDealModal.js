@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import api from './apiClient'; 
 import axios from 'axios';
 import {
     Button,
@@ -21,20 +22,6 @@ import PeopleIcon from '@mui/icons-material/People';
 import DescriptionIcon from '@mui/icons-material/Description';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-
-// API Configuration
-const API_BASE_URL = 'http://127.0.0.1:8000/api';
-const api = axios.create({ baseURL: API_BASE_URL });
-api.interceptors.request.use(
-    config => {
-        const token = localStorage.getItem('access');
-        if (token) {
-            config.headers['Authorization'] = `Bearer ${token}`;
-        }
-        return config;
-    },
-    error => Promise.reject(error)
-);
 
 export default function AddDealModal({ open, handleClose, customers = [], refreshData, editDeal, isEdit = false }) {
     const [selectedCustomer, setSelectedCustomer] = useState('');
