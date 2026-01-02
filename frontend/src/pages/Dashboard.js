@@ -783,7 +783,7 @@ export default function Dashboard2() {
     const handleDeleteCustomer = async (customerId) => {
         if (window.confirm('Are you sure you want to delete this customer?')) {
             try {
-                await api.delete('/customers/');
+                await api.delete(`/customers/${customerId}/`);
                 setSnackbar({ open: true, message: 'Customer deleted successfully!', severity: 'success' });
                 fetchData();
             } catch (err) {
@@ -796,7 +796,7 @@ export default function Dashboard2() {
     const handleDeleteDeal = async (dealId) => {
         if (window.confirm('Are you sure you want to delete this deal?')) {
             try {
-                await api.delete('/deals/');
+                await api.delete(`/deals/${dealId}/`);
                 setSnackbar({ open: true, message: 'Deal deleted successfully!', severity: 'success' });
                 fetchData();
             } catch (err) {
