@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import api from './apiClient'; 
 import axios from 'axios';
 import {
     Button,
@@ -20,20 +21,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import PersonIcon from '@mui/icons-material/Person';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import PhoneIcon from '@mui/icons-material/Phone';
-
-// API Configuration
-const API_BASE_URL = 'http://127.0.0.1:8000/api';
-const api = axios.create({ baseURL: API_BASE_URL });
-api.interceptors.request.use(
-    config => {
-        const token = localStorage.getItem('access');
-        if (token) {
-            config.headers['Authorization'] = `Bearer ${token}`;
-        }
-        return config;
-    },
-    error => Promise.reject(error)
-);
 
 export default function AddCustomerModal({ open, handleClose, refreshData, editCustomer, isEdit = false }) {
     // --- FIX: Use three separate states for the form fields ---
@@ -76,7 +63,7 @@ export default function AddCustomerModal({ open, handleClose, refreshData, editC
         try {
             if (isEdit) {
                 // Update existing customer
-                await api.put(`/customers/${editCustomer.id}/`, {
+                await api.put('/customers/', {
                     name: name.trim(),
                     email: email.trim() || null,
                     phone_number: phoneNumber.trim() || null
