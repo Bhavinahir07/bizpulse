@@ -63,7 +63,7 @@ export default function AddCustomerModal({ open, handleClose, refreshData, editC
         try {
             if (isEdit) {
                 // Update existing customer
-                await api.put('/customers/', {
+               await api.put(`/customers/${editCustomer.id}/`, {
                     name: name.trim(),
                     email: email.trim() || null,
                     phone_number: phoneNumber.trim() || null
