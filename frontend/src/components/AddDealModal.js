@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import api from './apiClient'; 
+// Change this line at the top of your modal files
+import api from '../pages/apiClient';
 import axios from 'axios';
 import {
     Button,
