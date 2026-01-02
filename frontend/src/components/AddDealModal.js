@@ -77,25 +77,24 @@ export default function AddDealModal({ open, handleClose, customers = [], refres
         setLoading(true);
         setError('');
 
-        try {
-            if (isEdit) {
-                // Update existing deal
-                await api.put(`/deals/${editDeal.id}/`, {
-                    customer_id: parseInt(selectedCustomer),
-                    description: description.trim(),
-                    amount: parseFloat(amount),
-                    due_date: dueDate
-                });
-            } else {
-                // Create new deal
-                await api.post('/deals/', {
-                    customer_id: parseInt(selectedCustomer),
-                    description: description.trim(),
-                    amount: parseFloat(amount),
-                    due_date: dueDate
-                });
-            }
-
+       try {
+    if (isEdit && editDeal) {
+        // CORRECTED: Added ${editDeal.id}/ to the URL
+        await api.put(`/deals/${editDeal.id}/`, {
+            customer_id: parseInt(selectedCustomer),
+            description: description.trim(),
+            amount: parseFloat(amount),
+            due_date: dueDate
+        });
+    } else {
+        // Create new deal
+        await api.post('/deals/', {
+            customer_id: parseInt(selectedCustomer),
+            description: description.trim(),
+            amount: parseFloat(amount),
+            due_date: dueDate
+        });
+    }
             // Show success message
             setSuccess(true);
 
