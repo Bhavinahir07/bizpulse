@@ -824,7 +824,7 @@ export default function Dashboard2() {
     // Reminder handler
     const handleSendReminder = async (dealId) => {
         try {
-            const response = await api.post('/deals/send_reminder/');
+            const response = await api.post(`/deals/${dealId}/send_reminder/`);
             setSnackbar({ open: true, message: response.data.success || 'Reminder sent successfully!', severity: 'success' });
         } catch (err) {
             console.error('Failed to send reminder:', err);
