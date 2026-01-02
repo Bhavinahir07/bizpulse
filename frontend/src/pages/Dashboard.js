@@ -783,7 +783,7 @@ export default function Dashboard2() {
     const handleDeleteCustomer = async (customerId) => {
         if (window.confirm('Are you sure you want to delete this customer?')) {
             try {
-                await api.delete(`/customers/${customerId}/`);
+                await api.delete('/customers/');
                 setSnackbar({ open: true, message: 'Customer deleted successfully!', severity: 'success' });
                 fetchData();
             } catch (err) {
@@ -796,7 +796,7 @@ export default function Dashboard2() {
     const handleDeleteDeal = async (dealId) => {
         if (window.confirm('Are you sure you want to delete this deal?')) {
             try {
-                await api.delete(`/deals/${dealId}/`);
+                await api.delete('/deals/');
                 setSnackbar({ open: true, message: 'Deal deleted successfully!', severity: 'success' });
                 fetchData();
             } catch (err) {
@@ -824,7 +824,7 @@ export default function Dashboard2() {
     // Reminder handler
     const handleSendReminder = async (dealId) => {
         try {
-            const response = await api.post(`/deals/${dealId}/send_reminder/`);
+            const response = await api.post('/deals/send_reminder/);
             setSnackbar({ open: true, message: response.data.success || 'Reminder sent successfully!', severity: 'success' });
         } catch (err) {
             console.error('Failed to send reminder:', err);
